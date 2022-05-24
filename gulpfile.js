@@ -213,6 +213,12 @@ function moveLang() {
 
 gulp.task('move:lang', moveLang);
 
+function moveLangDev() {
+  return gulp.src(['./src/lang/*']).pipe(gulp.dest('./dist/bundle'));
+}
+
+gulp.task('move:langDev', moveLangDev);
+
 function moveConfig() {
   return gulp.src(['./config.properties']).pipe(gulp.dest('./dist'));
 }
@@ -305,12 +311,6 @@ function connectDevServer(done) {
           target: targetOrchestraUrl,
           route: '/cometd',
           changeOrigin: false,
-          ws: true
-        }),
-        proxy('/bundle', {
-          target: targetOrchestraUrl,
-          route: '/bundle',
-          changeOrigin: true,
           ws: true
         })
       ];
@@ -555,6 +555,7 @@ gulp.task(
     'compile:scss',
     'move:js',
     'move:assets',
+    'move:langDev',
     'move:images',
     'move:icons',
     'cache:killer',
