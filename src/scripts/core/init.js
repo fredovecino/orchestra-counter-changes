@@ -29,6 +29,12 @@ var init = new function () {
             sessvars.systemInformation = spService.get('systemInformation');
         }
 
+        //set if the system is VisitManager
+        sessvars.isVisitManager = sessvars.systemInformation.productName == "Visit Manager";
+
+        // set help url
+        util.setHelpUrl();
+
         validateAndSetDateConvension(sessvars.systemInformation);
 
         jQuery.i18n.properties({
@@ -138,7 +144,7 @@ var init = new function () {
             typeof sessvars.state.servicePointId !== "undefined" && sessvars.state.servicePointId != null &&
             typeof sessvars.state.workProfileId !== "undefined" && sessvars.state.workProfileId != null) {
             servicePoint.storeSettingsInSession(sessvars.state);
-            var profileSetting =  {
+            var profileSetting = {
                 'userName': sessvars.currentUser.userName,
                 'branchId': sessvars.state.branchId,
                 'servicePointId': sessvars.state.servicePointId,
@@ -153,22 +159,22 @@ var init = new function () {
 
     var initKeyboardEvents = function () {
         var $callNextBtn = $('#callNextBtn'),
-            $walkInBtn   = $('#walkDirectBtn'),
-            $endBtn      = $('#endVisitBtn');
+            $walkInBtn = $('#walkDirectBtn'),
+            $endBtn = $('#endVisitBtn');
 
         Mousetrap.unbind('alt+n');
         Mousetrap.unbind('alt+w');
         Mousetrap.unbind('alt+e');
 
-        Mousetrap.bind('alt+n', function(e) {
+        Mousetrap.bind('alt+n', function (e) {
             $callNextBtn.trigger('onclick');
             return false;
         });
-        Mousetrap.bind('alt+w', function(e) {
+        Mousetrap.bind('alt+w', function (e) {
             $walkInBtn.trigger('onclick');
             return false;
         });
-        Mousetrap.bind('alt+e', function(e) {
+        Mousetrap.bind('alt+e', function (e) {
             $endBtn.trigger('onclick');
             return false;
         });

@@ -14,7 +14,7 @@
         color: $qmatic-btn-hover;
     }
 
-    &:focus {
+    &:focus-visible {
         // outline: 0;
         outline: 3px solid rgba(0,0,0,0.4);
         outline-offset: 5px;

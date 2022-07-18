@@ -10,6 +10,7 @@ var queues = new function () {
     var multiServicePopovers = [];
     var customersPopovers = [];
     var isNoteEnabled = false;
+    var isNoteExpanded = false;
     var prResourceEnabled = false;
     var secResourceEnabled = false;
     var showPrResource = false;
@@ -217,6 +218,7 @@ var queues = new function () {
                     "columns": columns, "filter": false, "headerCallback": headerCallback, "emptyTableLabel": "info.queues.none", "scrollYHeight": "100%", "initFn": allQueuesInitFn
                 });
                 queuesTable.fnSort(SORTING);
+                queuesTable.fnSort([1, 'asc']);
                 queuesTable.fnAdjustColumnSizing();
                 $('#queues').prepend("<caption class='sr-only'>Other Queues</caption>");
 
@@ -225,6 +227,7 @@ var queues = new function () {
                     "columns": columns, "filter": false, "headerCallback": headerCallback, "emptyTableLabel": "info.queues.none", "scrollYHeight": "100%", "filterData": myQueuesFilterFn, "initFn": myQueuesInitFn
                 });
                 myQueuesTable.fnSort(SORTING);
+                myQueuesTable.fnSort([1, 'asc']);
                 myQueuesTable.fnAdjustColumnSizing();
                 $('#myQueuesTable').prepend("<caption class='sr-only'>My Queues</caption>");
             }
@@ -288,12 +291,45 @@ var queues = new function () {
         });
     }
 
+    function format(d) {
+        return (
+            '<div class="qm-table-expand">' + '<div class="qm-table-expand-col-1">'  +'<i class="icon-message"></i>' + '</div>' +
+            '<div class="qm-table-expand-col-2">' + d.parameterMap['custom1'] +'</div>'  + '</div>'
+        );
+    }
+
+    function expandNotes() {
+        setTimeout(function(){
+            var detailRows = [];
+            var table = $('#tickets').DataTable();
+            $('#tickets tbody tr td.details-control').each(function() {
+
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if(row.data().parameterMap.custom1){
+                    var idx = detailRows.indexOf(tr.attr('id'));
+                    tr.addClass('details qm-table-bot-border');
+                    row.child(format(row.data())).show();
+                    if (idx === -1) {
+                        detailRows.push(tr.attr('id'));
+                    }
+                }   
+             });     
+        }, 10);
+    }
+
     var queueDetailInitFn = function (queuesObj) {
         if (queuesObj !== null && queuesObj !== undefined) {
             var waitingCustomers = queuesObj.length;
             setNumberOfWaitingCustomers('#queueDetailView .qm-tab-information__text', waitingCustomers);
         }
         var table = $('#tickets').DataTable();
+
+        if(isNoteEnabled && isNoteExpanded){
+            expandNotes();
+        }
+       
         table.on('preDraw', function () {
             queues.runClearQueuePopovers();
         });
@@ -323,6 +359,7 @@ var queues = new function () {
 
             queueViewController.navigateToDetail();
             isNoteEnabled = sessvars && sessvars.isNotesEnabled;
+            isNoteExpanded = sessvars && sessvars.isNotesExpanded;
             prResourceEnabled = sessvars && sessvars.prResourceEnabled;
             secResourceEnabled = sessvars && sessvars.secResourceEnabled;
             oneClickTransfer = sessvars && sessvars.oneClickTransfer;
@@ -343,7 +380,7 @@ var queues = new function () {
                 }
                 queueDetailInitFn(tickets);
             } else {
-                var columns = [
+                var columns = [                    
                     /* Id */                {
                         "bSearchable": false,
                         "bVisible": false,
@@ -424,7 +461,13 @@ var queues = new function () {
                         "sType": "qm-sort",
                         "sWidth": "",
                         "mDataProp": "waitingTime"
-                    }
+                    },
+                    {
+                        className: 'details-control',
+                        orderable: false,
+                        data: null,
+                        defaultContent: '',
+                    },
 
                 ];
                 var headerCallback = function (nHead, aasData, iStart, iEnd, aiDisplay) {
@@ -443,6 +486,11 @@ var queues = new function () {
                     } else {
                         $('th:eq(1)', nHead).addClass('qm-table--hide-column');
                     }
+
+                    if(isNoteEnabled && isNoteExpanded) {
+                        $('th:eq(1)', nHead).addClass('qm-table--hide-column');
+                    }
+
                     if (prResourceEnabled && aasData.length && aasData[0].currentVisitService && aasData[0].currentVisitService.primaryResource) {
                         var data = aasData[0].currentVisitService.primaryResource;
                         $('th:eq(4)', nHead).removeClass('qm-table--hide-column');
@@ -571,6 +619,10 @@ var queues = new function () {
                     if (isNoteEnabled) {
                         $('td:eq(1)', nRow).removeClass('qm-table--hide-column');
                     } else {
+                        $('td:eq(1)', nRow).addClass('qm-table--hide-column');
+                    }
+                   
+                    if(isNoteEnabled && isNoteExpanded) {
                         $('td:eq(1)', nRow).addClass('qm-table--hide-column');
                     }
                     if (iDisplayIndex == 0 && aData && aData.currentVisitService) {

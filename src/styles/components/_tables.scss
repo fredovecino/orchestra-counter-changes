@@ -287,8 +287,61 @@
 
 .qm-table-filter {
     margin-bottom: rem($global-standard-margin);
+    padding-left: 10px;
 }
+.qm-table-bot-border{
+    border-bottom: 0px !important;
+}
+.qm-table-expand {
 
+    margin-left: 8px;
+
+    &-col-1 {
+        width: 4%;
+        float: left;
+        @at-root [dir='rtl'] & {
+            float: right;
+            margin-right: -8px;
+        }
+        margin-top: 3px;
+    }
+    &-col-2 {
+        width: 96%;
+        // overflow: hidden;
+        float: right;
+        @at-root [dir='rtl'] & {
+            justify-content: right;
+            display: inline-flex;
+            padding-right: 30px;
+            text-align: justify; /* For Edge */
+            -moz-text-align-last: right; /* For Firefox prior 58.0 */
+            text-align-last: right;
+        }
+        
+    }
+}
+// .qm-table-expand {
+
+//     display: flex;
+//     padding-left: 7px;
+//     @at-root [dir='rtl'] & {
+//        float: right;
+//        padding-left: 7px;
+//        padding-right: 7px;
+//     }
+
+//     &-col-1 {
+//         flex: 4%;
+//         margin-top: 3px;
+//     }
+//     &-col-2 {
+//         flex: 96%;
+//         @at-root [dir='rtl'] & {
+//             padding-right: 16px;
+//          }
+//     }
+
+// }
 #myQueuesPanel,
 #allQueuesPanel {
     tr {

@@ -20,6 +20,7 @@ allQueuesBtnEnabled = false;						// All queues tab button
 workprofileVisitsBtnEnabled = false;    // Workprofile visits tab button
 buttonParkEnabled = false;							// Park Button
 buttonNotesEnabled = false;							// Edit/Add Notes Button
+buttonNotesExpanded = false;						// Expand Notes Button
 buttonNoShowsEnabled = true;						// No Shows Button
 buttonRecallEnabled = false;						// Recall Button
 buttonWrapUpEnabled = false;						// Wrap up Button
@@ -185,6 +186,12 @@ function showModules() {
 		$('.js-notes').hide();
 		sessvars.isNotesEnabled = false;
 	}
+	if (buttonNotesExpanded == true) {
+		sessvars.isNotesExpanded = true;
+	} else {
+		sessvars.isNotesExpanded = false;
+	}
+
 
 	if (buttonWrapUpEnabled == true) {
 		$("#wrapUpBtn").show();
@@ -404,6 +411,9 @@ function setUnitTypeModules(val) {
 	}
 	if (params.btnNotes != undefined) {
 		buttonNotesEnabled = params.btnNotes;						// Notes Button
+	}
+	if (params.expandNotes != undefined) {
+		buttonNotesExpanded = params.expandNotes;						// Notes Button
 	}
 	if (params.btnNoShows != undefined) {
 		buttonNoShowsEnabled = params.btnNoShows;					// No Shows Button

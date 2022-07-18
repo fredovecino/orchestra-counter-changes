@@ -14,7 +14,7 @@
         opacity: 0;
         height: 100%;
 
-        &:focus {
+        &:focus-visible {
           & + .native-like-select {
             outline: 1px dotted;
             outline-style: dotted;

@@ -37,6 +37,7 @@
     ====================================
     Version    Date         Comments                                  Signature
     =========  ===========  ========================================  =========
+    7.0.26     2022-07-01   Added parameter to expand notes           basama
     7.0.25     2021-11-24   Changed send SMS default value            basama
     7.0.24     2021-09-02   Added parameter to One click transfer     basama
     7.0.23     2021-02-16   Fixed default value mismatch in marks     udaban 
@@ -110,7 +111,7 @@
 
 <unit name="WebServicePoint_Expressia_D924"
       frameworkVersion="2"
-      unitVersion="7.0.25"
+      unitVersion="7.0.26"
       type="SERVICE_POINT"
       defaultNoUnits="1"
       maxNoUnits="127"
@@ -345,6 +346,14 @@
           defaultValue="false"
           label="Notes Button"
           description="Edit/Add/Show Notes Button"
+          sortOrder="5024"
+          writeLevel="branch"
+          privilege="install:adminAdmin"/>
+        <parameter name="expandNotes"
+          type="Boolean"
+          defaultValue="false"
+          label="Notes full view"
+          description="Show full text of the note in queue view"
           sortOrder="5024"
           writeLevel="branch"
           privilege="install:adminAdmin"/>

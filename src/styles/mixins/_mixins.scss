@@ -255,3 +255,8 @@
     -webkit-line-clamp: $lines;
     -webkit-box-orient: vertical;
 }
+
+button:focus {
+    // outline: 1px dotted;
+    outline: none;
+}

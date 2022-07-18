@@ -8,6 +8,48 @@ This document describes the new features, bug corrections, known issues and reco
 
 **Note:** Several of the remarks refer to a Jira number (Jira is Qmatic&#39;s internal registration system for bugs), or Pivotal Tracker (internal system for improvements and other issues).
 
+<h2>Version 5.1.0</h2>
+
+**Date: 01/07/2022**
+
+**Build number: 1**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **COUNTER-614** | **PWC - Notes field in queue view** |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **COUNTER-607** | **Sorting of All Queues** |
+
+----------
+
+<h2>Version 5.0.2</h2>
+
+**Date: 09/06/2022**
+
+**Build number: 3**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **COUNTER-603** | **Link Question-mark to ExpCloud user guide (in ExpCloud version of Counter)** |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **COUNTER-606** | **Counter > Recall, Recycle and Noshow buttons get disabled after "Send SMS" and Page reload** |
+| **COUNTER-600** | **Problem in tab behaviour in experience portal** |
+| **COUNTER-608** | **Note get hidden when another user do a transfer.** |
+| **COUNTER-605** | **Polish Font problem.** |
+
+----------
 
 <h2>Version 5.0.1</h2>
 

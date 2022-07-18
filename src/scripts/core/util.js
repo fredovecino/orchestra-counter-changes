@@ -1246,6 +1246,7 @@ var util = new function () {
         var tmpVisit = spService.putParams("branches/" + sessvars.state.branchId + "/visits/" + selectedVisit.id + "/parameters/", objParms);
         if (sessvars.state.visit && sessvars.state.visit.id === tmpVisit.id) {
             sessvars.state.visit = tmpVisit;
+            servicePoint.updateWorkstationStatus(false, true);
         }
         util.showMessage(jQuery.i18n
             .prop('info.sms.success'));
@@ -1258,4 +1259,8 @@ var util = new function () {
                 }
                 
         }
+    this.setHelpUrl = function () {
+        var elem = document.getElementsByClassName("qm-header__help-btn")[0];
+        elem.href = sessvars.isVisitManager ? "https://experiencecloud.qmatic-qa.io/user-manual/" : "/help";
+    }
 };

@@ -65,7 +65,7 @@
             background: #175A83;
             border-color: #175A83;
         }
-        &:focus {
+        &:focus-visible {
             outline-offset: 2px;
             outline: 3px solid rgba(0,0,0,0.6);
         }
@@ -85,7 +85,7 @@
             color: #175A83 ;
             border-color: #175A83;
         }
-        &:focus {
+        &:focus-visible {
             outline-offset: 2px;
             outline: 3px solid rgba(0,0,0,0.6);
         }

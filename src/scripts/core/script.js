@@ -199,6 +199,9 @@ var servicePoint = new function () {
 		} else {
 			updateUI();
 		}
+		if(sessvars.isVisitManager){
+			this.handleUserStatus();
+		}
 		if(sessvars.currentUser.locale) {
 			document.documentElement.lang = sessvars.currentUser.locale;
 		  }
@@ -331,6 +334,20 @@ var servicePoint = new function () {
 		// }
 		// autoCloseExtendtimer = null;
 	};
+
+	this.handleUserStatus = function () {
+		document.addEventListener('visibilitychange', function () {
+			if (!document.hidden) {
+				sessvars.state = servicePoint.getState(spService
+					.get("user/status"));
+				sessvars.statusUpdated = new Date();
+        		if (typeof sessvars.state.workProfileId === "undefined" || sessvars.state.workProfileId === null) {
+					sessvars.workProfileId = null
+					servicePoint.showSettingsWindow();
+				}
+			}
+		});
+	}
 
 	// display modal popup with settings
 	this.showSettingsWindow = function () {
@@ -1598,8 +1615,8 @@ var servicePoint = new function () {
 	 *
 	 */
 	this.updateWorkstationStatus = function (isRefresh, blockCardChange, blockMesssagePopup,update) {
-		clearOngoingVisit();
-
+		 clearOngoingVisit();
+		
 		if (!blockCardChange) {
 			// Card Navigation - There are types types of cards (CLOSED, INACTIVE and VISIT)
 			if (sessvars.state.servicePointState == servicePoint.servicePointState.CLOSED) {
@@ -1830,6 +1847,7 @@ var servicePoint = new function () {
 						document.getElementById("notesEdit").value = (sessvars.state.visit.parameterMap.custom1);
 					}
 				}
+				
 				if (sessvars.state.visit.parameterMap.meetingUrl != undefined) {
 					$('#meetingBtn').show();
 				}
@@ -2369,7 +2387,7 @@ var servicePoint = new function () {
 
 
 	// clean the GUI on refresh or when a button is pressed
-	var clearOngoingVisit = function () {
+	var clearOngoingVisit = function (queuePopulated) {
 		$("#ticketNumber").empty();
 		$("#serviceId").empty();
 		servicePoint.servicesLeft = false;
@@ -2390,6 +2408,7 @@ var servicePoint = new function () {
 		$("#verticalMessage").empty();
 		$("#notesEdit").val('');
 		notesController.navigateToPresentational();
+		
 		document.getElementById("notesMessage").innerHTML = jQuery.i18n.prop('button.add.note');
 		$("#callNextBtn").prop("disabled", false);
 		$("#walkDirectBtn").prop("disabled", false);
@@ -2838,11 +2857,14 @@ var servicePoint = new function () {
 				// Someone or something has caused us to log off this servicepoint,
 				// could either be someone else stealing it or the current user
 				// logging out somewhere else, or just a logout
-				sessvars.$.clearMem();
-				sessvars.cfuSelectionSet = true;
-				// we can't call the logout service by ourselves, as it might be us
-				// that have logged in somewhere else
-				window.location.replace("/logout.jsp");
+				if (!sessvars.isVisitManager){
+					sessvars.$.clearMem();
+					sessvars.cfuSelectionSet = true;
+					// we can't call the logout service by ourselves, as it might be us
+					// that have logged in somewhere else
+					window.location.replace("/logout.jsp");
+				}
+				
 				break;
 			case servicePoint.publicEvents.RESET:
 				// This event will follow servicePoint.publicEvents.USER_SERVICE_POINT_SESSION_END.
@@ -2853,11 +2875,11 @@ var servicePoint = new function () {
 				break;
 			case servicePoint.publicEvents.VISIT_TRANSFER_TO_SERVICE_POINT_POOL:
 				sessvars.cfuSelectionSet = true;
-				servicePoint.updateWorkstationStatus(false);
+				servicePointPool.renderCounterPool();
 				break;
 			case servicePoint.publicEvents.VISIT_TRANSFER_TO_USER_POOL:
 				sessvars.cfuSelectionSet = true;
-				servicePoint.updateWorkstationStatus(false);
+				userPool.renderUserPool();
 				break;
 			case servicePoint.publicEvents.USER_SERVICE_POINT_WORK_PROFILE_SET:
 				// If someone else (e.g. an administrator) sets the work profile for
@@ -2896,7 +2918,6 @@ var servicePoint = new function () {
 			case servicePoint.publicEvents.APPOINTMENT_QUEUE_POPULATED:
 			case servicePoint.publicEvents.USER_POOL_POPULATED:
 			case servicePoint.publicEvents.SP_POOL_POPULATED:
-				servicePoint.updateWorkstationStatus();
 				queuePopulated(processedEvent);
 				break;
 			default:

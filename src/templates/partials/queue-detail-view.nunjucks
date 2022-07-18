@@ -15,7 +15,7 @@
     <div class="qm-queue-detail__content">
         <table id="tickets" class="qm-table qm-table--simple" aria-labelledby="ticketListHeader">
             <thead class="qm-table__header">
-                <tr>
+                <tr>                    
                     <th class="ticketVisitId"></th>
                     <th class="ticketTicketId"></th>
                     <th class="ticketNotes"></th>
@@ -25,6 +25,7 @@
                     <th class="ticketSecResource"></th>
                     <th class="ticketAppointmentTime"></th>
                     <th class="ticketWaitingTime"></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="qm-table__body"></tbody>
