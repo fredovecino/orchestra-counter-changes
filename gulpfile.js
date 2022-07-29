@@ -304,7 +304,7 @@ function connectDevServer(done) {
         proxy('/rest', {
           target: targetOrchestraUrl,
           route: '/rest',
-          changeOrigin: true,
+          changeOrigin: false,
           ws: true
         }),
         proxy('/cometd', {
