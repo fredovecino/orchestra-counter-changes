@@ -1,6 +1,6 @@
 <header class="qm-header" id="header">
     <div class="qm-header__left">
-      <a class="qm-header__home-link" href="/" onclick="return servicePoint.handleHome();">
+      <a id="header__logo" class="qm-header__home-link" href="" onclick="servicePoint.redirectURL();return servicePoint.handleHome();">
         <span id="homeLink" class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
           <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
           <span class="sr-only"></span>

@@ -52,6 +52,7 @@ var trtUpdateNeeded = true;
 var journeyUpdateNeeded = true;
 var unitMappings;
 var branches_;
+var VISIT_MANAGER_SUPPORTED = '4.4.0.152';
 
 // Navigation Controllers.... modals, cards, etc
 var modalNavigationController = new $Qmatic.components.NavController("#qm-modal-nav");
@@ -2670,6 +2671,16 @@ var servicePoint = new function () {
 		sessvars.$.clearMem();
 	};
 
+	this.redirectURL = function () {
+		var url;
+		if (compareVersions(sessvars.systemInformation.productVersion, VISIT_MANAGER_SUPPORTED) == -1) {
+			url = '/';
+		} else {
+			url = (sessvars.systemInformation.portalUrl !== undefined) ? sessvars.systemInformation.portalUrl : "/";
+		}
+		$("#header__logo").attr("href", url);			
+	};
+
 	this.handleLogoutQES = function (warn, force) {
 		var isLogout = false;
 		if (force) {
@@ -3358,5 +3369,21 @@ var servicePoint = new function () {
 			return text;
 		  }
 	}
+
+	var compareVersions = function(baseVersion, currentVersion) {
+        var a = baseVersion.split('.');
+        var b = currentVersion.split('.');
+        var i = 0;
+		var len = Math.max(a.length, b.length);
+
+        for (; i < len; i++) {
+            if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
+                return 1;
+            } else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
+                return -1;
+            }
+        }
+        return 0;
+    }
 };
 

@@ -185,6 +185,12 @@ function moveImages() {
 
 gulp.task('move:images', moveImages);
 
+function moveFavicon() {
+  return gulp.src(['./src/favicon.ico']).pipe(gulp.dest('./dist'));
+}
+
+gulp.task('move:favicon', moveFavicon);
+
 function moveIcons(done) {
   // return gulp.src('./src/icons/**').pipe(gulp.dest('./dist/css/icons'));
   done();
@@ -298,7 +304,7 @@ function connectDevServer(done) {
         proxy('/rest', {
           target: targetOrchestraUrl,
           route: '/rest',
-          changeOrigin: false,
+          changeOrigin: true,
           ws: true
         }),
         proxy('/cometd', {
@@ -525,6 +531,7 @@ gulp.task(
     'move:js',
     'move:assets',
     'move:images',
+    'move:favicon',
     'move:icons',
     'cache:killer',
     'move:inf',
@@ -556,6 +563,7 @@ gulp.task(
     'move:js',
     'move:assets',
     'move:images',
+    'move:favicon',
     'move:icons',
     'cache:killer',
     'watch:start',
@@ -584,6 +592,7 @@ gulp.task(
     'move:js',
     'move:assets',
     'move:images',
+    'move:favicon',
     'move:icons',
     'cache:killer',
     'util:war',
@@ -646,6 +655,7 @@ gulp.task(
     'clean:dist',
     'move:assets',
     'move:images',
+    'move:favicon',
     'move:icons',
     'cache:killer',
     'move:inf',
@@ -683,6 +693,7 @@ gulp.task(
     'clean:dist',
     'move:assets',
     'move:images',
+    'move:favicon',
     'move:icons',
     'cache:killer',
     'move:inf',

@@ -10,15 +10,17 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 5.1.0</h2>
 
-**Date: 01/07/2022**
+**Date: 29/07/2022**
 
-**Build number: 1**
+**Build number: 2**
 
 <h3>Stories</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **COUNTER-614** | **PWC - Notes field in queue view** |
+| **COUNTER-604** | **Counter in VM - Link back to Experience cloud portal** |
+| **COUNTER-599** | **Update favicon** |
 
 <h3>Bug fixes</h3>
 
