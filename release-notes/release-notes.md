@@ -19,6 +19,7 @@ This document describes the new features, bug corrections, known issues and reco
 | **Id** | **Release notes** |
 | --- | --- |
 | **COUNTER-683** | **Show link to Experience Cloud portal instead of Home-icon** |
+| **COUNTER-685** | **Typo in Dutch translation** |
 
 ----------
 
