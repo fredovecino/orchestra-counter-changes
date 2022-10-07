@@ -39,7 +39,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+  .icon-open-in-new:before {
+    content: "\e983";
+  }
   .icon-multicustomer-rtl:before {
     content: "\e97f";
   }

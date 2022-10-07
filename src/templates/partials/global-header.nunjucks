@@ -1,11 +1,11 @@
 <header class="qm-header" id="header">
     <div class="qm-header__left">
-      <a id="header__logo" class="qm-header__home-link" href="" onclick="servicePoint.redirectURL();return servicePoint.handleHome();">
+      <a id="headerLogo" class="qm-header__home-link" href=""  onclick="servicePoint.redirectURL();return servicePoint.handleHomeInVisitManager();return servicePoint.handleHome();">
         <span id="homeLink" class="qm-action-btn qm-action-btn--only-icon qm-header__home-btn">
           <i class="qm-action-btn__icon icon-home" aria-hidden="true"></i>
           <span class="sr-only"></span>
         </span>
-        <span class="qm-header__brand-logo-container">
+        <span id="homeBrandLogo" class="qm-header__brand-logo-container">
           <img class="qm-header__brand-logo" src="./images/brand_logo_header.png" alt="" role="presentation"/>
           {# <span class="sr-only"></span> #}
         </span>
@@ -29,6 +29,12 @@
     <div class="qm-header__right">
       <nav class="qm-header__nav">
         <ul class="qm-header__nav-list">
+          <li id="cloudLinkSection" onclick="servicePoint.redirectURL();return servicePoint.handleHome();" class="qm-header__nav-list-item qm-header__cloud-link" > 
+            <a id="cloudHref" class="qm-header__cloud-link-container" href=""> 
+              <span id="cloudLink"></span>
+              <i class="qm-action-btn__icon icon-open-in-new" aria-hidden="true"></i>
+            </a>
+          </li>
           <li class="qm-header__nav-list-item">
             <a target="_blank" class="qm-action-btn qm-action-btn--only-icon qm-header__help-btn">
                 <i class="qm-action-btn__icon icon-help" aria-hidden="true"></i>

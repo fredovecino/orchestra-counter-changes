@@ -200,8 +200,15 @@ var servicePoint = new function () {
 		} else {
 			updateUI();
 		}
-		if(sessvars.isVisitManager){
+		$('#cloudLinkSection').hide();
+		$('#headerLogoWithCloud').hide();
+		if(sessvars.isVisitManager){	
 			this.handleUserStatus();
+		}
+		if(sessvars.isVisitManager && sessvars.systemInformation.portalUrl !== undefined){ 
+			$('#homeBrandLogo').addClass('qm-header__brand-logo-container__cloud');
+			$('#cloudLinkSection').show();
+			$('#homeLink').hide();
 		}
 		if(sessvars.currentUser.locale) {
 			document.documentElement.lang = sessvars.currentUser.locale;
@@ -2660,6 +2667,12 @@ var servicePoint = new function () {
 			return false;
 		}
 	};
+	
+	this.handleHomeInVisitManager = function() {
+		if (sessvars.isVisitManager) {
+			return false;
+		}
+	}
 
 	this.handleHome = function () {
 		if (workstationOffline || (servicePoint.hasValidSettings() && servicePoint.isOutcomeOrDeliveredServiceNeeded())) {
@@ -2678,7 +2691,12 @@ var servicePoint = new function () {
 		} else {
 			url = (sessvars.systemInformation.portalUrl !== undefined) ? sessvars.systemInformation.portalUrl : "/";
 		}
-		$("#header__logo").attr("href", url);			
+		$("#headerLogo").attr("href", url);
+		if(url !== '/') {
+			$("#cloudHref").attr("href", url);
+			$("#cloudHref").attr("target", "_blank");
+		}
+				
 	};
 
 	this.handleLogoutQES = function (warn, force) {

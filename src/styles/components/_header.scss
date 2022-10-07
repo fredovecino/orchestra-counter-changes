@@ -56,6 +56,33 @@
     &__nav-list-item {
       display: flex;
     }
+    &__cloud-link-container { 
+        color: rgba($color: #000000, $alpha: 0.6);
+        text-decoration: none;
+        display: flex;
+    }
+    &__cloud-link-container:hover { 
+        color: rgba($color: #000000, $alpha: 0.6);
+        text-decoration: none;
+        display: flex;
+    }
+    &__cloud-link {
+        padding: 0 10px;
+        margin: 0 10px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgba($color: #000000, $alpha: 0.6);
+        border-right: 2px solid #DBDAD3;
+        cursor: pointer;
+        @at-root [dir="rtl"] & { 
+            border-right: none;
+            border-left: 2px solid #DBDAD3;
+            }
+        i {
+            padding: 0 10px
+        }
+    }
 
     &__home-btn,
     &__help-btn,
@@ -84,6 +111,10 @@
         flex: 1 0 auto;
         align-items: center;
         margin-left: rem($global-standard-margin);
+        cursor: pointer;
+        &__cloud {
+            cursor: auto !important;
+        }
 
         @at-root [dir='rtl'] & {
             margin-left: 0;

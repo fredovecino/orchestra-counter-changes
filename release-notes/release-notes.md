@@ -8,6 +8,21 @@ This document describes the new features, bug corrections, known issues and reco
 
 **Note:** Several of the remarks refer to a Jira number (Jira is Qmatic&#39;s internal registration system for bugs), or Pivotal Tracker (internal system for improvements and other issues).
 
+<h2>Version 5.2.0</h2>
+
+**Date: 29/07/2022**
+
+**Build number: 1**
+
+<h3>Stories</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **COUNTER-683** | **Show link to Experience Cloud portal instead of Home-icon** |
+
+----------
+
+
 <h2>Version 5.1.0</h2>
 
 **Date: 29/07/2022**

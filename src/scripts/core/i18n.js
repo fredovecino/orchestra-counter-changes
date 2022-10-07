@@ -359,6 +359,7 @@ var i18n = new function () {// helper method (that doesnt bomb) for setting inne
 
         //edit customer window
         i18nSafeAppend("editCustomerHeader", "info.header.edit.profile");
+        i18nSafeAppend("cloudLink", "info.header.cloud.url.link");
         i18nSafe("editFirstNameLabel", "field.firstName");
         i18nSafe("editLastNameLabel", "field.lastName");
         i18nSafe("editAddressLine1Label", "field.addressLine1");
