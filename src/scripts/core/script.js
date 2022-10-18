@@ -202,7 +202,7 @@ var servicePoint = new function () {
 		}
 		$('#cloudLinkSection').hide();
 		$('#headerLogoWithCloud').hide();
-		if(sessvars.isVisitManager){	
+	    if(sessvars.isVisitManager){
 			this.handleUserStatus();
 		}
 		if(sessvars.isVisitManager && sessvars.systemInformation.portalUrl !== undefined){ 
@@ -670,6 +670,7 @@ var servicePoint = new function () {
 			isHijacking = confirm(warnUser, settings);
 		}
 		util.updateServicesExpectedTransactionTimes();
+		servicePoint.setClosingSoon(false);
 		return isHijacking;
 	};
 
@@ -1447,6 +1448,7 @@ var servicePoint = new function () {
 			queueViewController.navigateToOverview();
 			servicePoint.updateWorkstationStatus();
 			sessvars.currentCustomer = null;
+			servicePoint.setClosingSoon(false);
 		}
 	};
 
@@ -1475,11 +1477,6 @@ var servicePoint = new function () {
 					queues.updateQueues('lazyUpdate');	
 				}
 				
-
-			
-
-
-				console.log(sessvars.state.visit)
 				if (sessvars.state.visitState != "CALL_NEXT_TO_QUICK") {
 					sessvars.statusUpdated = new Date();
 				}
@@ -1717,8 +1714,19 @@ var servicePoint = new function () {
 					}
 				}
 				if (sessvars.state.visit.parameterMap.meetingUrl != undefined) {
-									$('#meetingBtn').show();
+					$('#meetingBtn').show();
 				}
+				
+				if (openUrl != "") {
+					if (sessvars.state.visit.parameterMap[openUrl] != undefined) {
+						urlToOpen = sessvars.state.visit.parameterMap[openUrl] 
+						if (sessvars.urlToOpen != urlToOpen && urlToOpen != "" && urlToOpen != "none"  && urlToOpen != undefined  && urlToOpen != null ) {
+							sessvars.urlToOpen = urlToOpen;
+							servicePoint.openUrlInTab(urlToOpen);
+						}
+					}	
+				}				
+
 			}
 			// DS or outcome needed - Update pools
 			spPoolUpdateNeeded = true;
@@ -1859,6 +1867,15 @@ var servicePoint = new function () {
 				if (sessvars.state.visit.parameterMap.meetingUrl != undefined) {
 					$('#meetingBtn').show();
 				}
+				if (openUrl != "") {
+					if (sessvars.state.visit.parameterMap[openUrl] != undefined) {
+						urlToOpen = sessvars.state.visit.parameterMap[openUrl] 
+						if (sessvars.urlToOpen != urlToOpen && urlToOpen != "" && urlToOpen != "none"  && urlToOpen != undefined  && urlToOpen != null ) {
+							sessvars.urlToOpen = urlToOpen;
+							servicePoint.openUrlInTab(urlToOpen);
+						}
+					}	
+				}	
 			}
 
 			$("#waitingTimeCounter").html(
@@ -2606,7 +2623,7 @@ var servicePoint = new function () {
 
 		servicePoint.servicesList = spService.get("branches/" + parseInt(sessvars.branchId)
 			+ "/services", true);
-
+		servicePoint.getClosingSoonStatus();
 		window.$Qmatic.components.header.setInformation(sessvars.branchName, sessvars.servicePointName, sessvars.state.workProfileName);
 	};
 
@@ -2667,13 +2684,11 @@ var servicePoint = new function () {
 			return false;
 		}
 	};
-	
 	this.handleHomeInVisitManager = function() {
 		if (sessvars.isVisitManager) {
 			return false;
 		}
 	}
-
 	this.handleHome = function () {
 		if (workstationOffline || (servicePoint.hasValidSettings() && servicePoint.isOutcomeOrDeliveredServiceNeeded())) {
 			util.showError(jQuery.i18n
@@ -2691,12 +2706,11 @@ var servicePoint = new function () {
 		} else {
 			url = (sessvars.systemInformation.portalUrl !== undefined) ? sessvars.systemInformation.portalUrl : "/";
 		}
-		$("#headerLogo").attr("href", url);
+		$("#headerLogo").attr("href", url);	
 		if(url !== '/') {
 			$("#cloudHref").attr("href", url);
 			$("#cloudHref").attr("target", "_blank");
-		}
-				
+		}		
 	};
 
 	this.handleLogoutQES = function (warn, force) {
@@ -3403,5 +3417,81 @@ var servicePoint = new function () {
         }
         return 0;
     }
+
+	this.getClosingSoonStatus =  function(){
+		if (buttonClosingSoonEnabled == true) {
+			loadbalanceWsStatus = spService.get("branches/" + sessvars.branchId + "/variables/loadbalanceWsStatus");
+			if (loadbalanceWsStatus == null || loadbalanceWsStatus == undefined) {
+				loadbalanceWsStatus = {};
+				var params = servicePoint.createParams();
+				params.json='{"name":"loadbalanceWsStatus", "value" : "' + JSON.stringify(loadbalanceWsStatus) + '"}';
+				spService.putParams("branches/" + sessvars.branchId + "/variables", params)
+			} else {
+				loadbalanceWsStatus = JSON.parse(loadbalanceWsStatus.value);
+				logicId = sessvars.servicePointInfo.id * 100000000000 + 20000000000 + sessvars.branchId;
+				val = loadbalanceWsStatus[""+ logicId];
+				if (val != undefined) {
+					servicePoint.showClosingSoon(val);
+				}
+			}
+			setTimeout(servicePoint.getClosingSoonStatus, 60*1000)
+		}
+	}
+
+	this.setClosingSoon = function(val) {
+		if (buttonClosingSoonEnabled == true && sessvars.state.servicePointState == "OPEN") {
+			logicId = sessvars.servicePointInfo.id * 100000000000 + 20000000000 + sessvars.branchId
+			if (val == undefined) {
+				val = loadbalanceWsStatus[""+ logicId];
+				if (val == undefined || val == false){
+					val = true;
+				} else {
+					val = false;
+				}
+			}
+			// make sure we have the latest version of the variable
+			loadbalanceWsStatus =  JSON.parse(spService.get("branches/" + sessvars.branchId + "/variables/loadbalanceWsStatus").value);
+			loadbalanceWsStatus[""+ logicId] = val;
+
+			var params = {};
+			var newParams = {};
+			newParams.name = "loadbalanceWsStatus";
+			newParams.value = JSON.stringify(loadbalanceWsStatus);
+			params.json=JSON.stringify(newParams);
+			spService.putParams("branches/" + sessvars.branchId + "/variables", params);
+			
+			servicePoint.showClosingSoon(val);
+
+			// send event to utt notifying status change
+			var closingSoonEvent = {
+				"M": "E",
+				"E": {
+					"evnt": "STATUS_CHANGE",
+					"type": "APPLICATION",
+					"prm": {}
+				}
+			};
+			closingSoonEvent.E.prm.uid = sessvars.servicePointUnitId
+				+ ":" + this.SW_SERVICE_POINT;
+			qevents.publish('/events/APPLICATION', closingSoonEvent);
+		}
+	}
+
+	this.showClosingSoon = function(val) {
+		if (val == true ) {
+			$("#msg-close-soon").html(jQuery.i18n.prop("message.closing.soon"))
+		} else {
+			$("#msg-close-soon").html(" ")
+		}
+	}
+	
+	this.openUrlInTab = function(val) { 
+		try {
+			window.open(val,'_blank');
+		} catch (error) {
+			console.error(error);
+		}
+	}
+		
 };
 

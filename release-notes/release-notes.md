@@ -8,11 +8,11 @@ This document describes the new features, bug corrections, known issues and reco
 
 **Note:** Several of the remarks refer to a Jira number (Jira is Qmatic&#39;s internal registration system for bugs), or Pivotal Tracker (internal system for improvements and other issues).
 
-<h2>Version 5.2.0</h2>
+<h2>Version 5.1.1</h2>
 
-**Date: 29/07/2022**
+**Date: 18/10/2022**
 
-**Build number: 1**
+**Build number: 2**
 
 <h3>Stories</h3>
 
@@ -20,6 +20,8 @@ This document describes the new features, bug corrections, known issues and reco
 | --- | --- |
 | **COUNTER-683** | **Show link to Experience Cloud portal instead of Home-icon** |
 | **COUNTER-685** | **Typo in Dutch translation** |
+| **COUNTER-695** | **Waiting area load balancer support in Counter** |
+| **COUNTER-696** | **Possibility to open a URL in another tab** |
 
 ----------
 

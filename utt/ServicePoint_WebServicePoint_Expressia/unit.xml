@@ -37,6 +37,7 @@
     ====================================
     Version    Date         Comments                                  Signature
     =========  ===========  ========================================  =========
+    7.0.24     2022-10-14   Open url and Waiting area load balancer   boudui
     7.0.25     2022-07-01   Added parameter to expand notes           basama
     7.0.24     2021-11-24   Changed send SMS default value            basama
     7.0.23     2021-09-02   Added parameter to One click transfer     basama
@@ -102,7 +103,7 @@
 
 <unit name="WebServicePoint_Expressia"
       frameworkVersion="2"
-      unitVersion="7.0.25"
+      unitVersion="7.0.26"
       type="SERVICE_POINT"
       defaultNoUnits="1"
       maxNoUnits="127"
@@ -524,6 +525,30 @@
           label="Send SMS"
           description="Enable/disable sms option"
           privilege="install:adminAdmin"/>  
+        <parameter name="btnStatus"
+          type="Boolean"
+          defaultValue="false"
+          label="Set counter status"
+          description="Option to set the counter to the status 'Closing Soon', which will be shown in the Operationspanel"
+          sortOrder="5042"
+          writeLevel="profile"
+          privilege="install:adminAdmin"/>
+        <parameter name="openUrl"
+          description="Which custom parameters holds the URL which is opened in a new tab"
+          sortOrder="5043"
+          label="Url to open"
+          type="Options"
+          mandatory="false"
+          writeLevel="profile"
+          privilege="branchAdmin"
+          multiSelection="false">
+          <options label="Select custom parameters">
+            <option label="custom2">custom2</option>
+            <option label="custom3">custom3</option>
+            <option label="custom4">custom4</option>
+            <option label="custom5">custom5</option>
+          </options>
+        </parameter>
 
         <parameter name="walkQueueA" 
           type="Queue" 
@@ -1294,6 +1319,27 @@
 
             ]]></unitEventHandler>
         </unitEvent>
+    <unitEvent name="STATUS_CHANGE">
+			<unitEventHandler type="GROOVY">
+				<![CDATA[
+					import com.qmatic.qp.api.device.DeviceEvent
+					import com.qmatic.qp.core.common.QPEvent
+					import com.qmatic.qp.api.event.EventType
+
+					unit.log("INFO", "STATUS_CHANGE")
+					QPEvent eAlert = new QPEvent("PUBLIC.STATUS_CHANGED", EventType.PUBLIC)   
+					eAlert.setParameters(event.getParameters())      
+					eAlert.setParameter("branchId", unit.getBranchId())                                                                                                                                                         
+					device = unit.getDevice("Web service point")	
+						try{
+							device.getDeviceManager().handleEvent(eAlert)
+							device.log("INFO","Sending event")
+						} catch (Throwable t){
+							device.log("INFO","Error sendingevent")
+						}        
+				]]>
+			</unitEventHandler>
+		</unitEvent>
   </unitEvents>
 
 </unit>

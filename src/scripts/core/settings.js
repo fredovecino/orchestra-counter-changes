@@ -46,7 +46,10 @@ pollServicePointPoolEnabled = false;
 prResourceEnabled = false;
 secResourceEnabled = false;
 oneClickTransfer = false;
-
+buttonClosingSoonEnabled = false;
+$('#closingSoonAction').hide();              _// making sure it is hidden by default 
+loadbalanceWsStatus = {};
+openUrl = "custom2";
 queueRefreshTime = 30;
 servicePointPoolRefreshTime = 30;
 userPoolRefreshTime = 30;								// refresh time in seconds, please note that lowering this value can decrease performance
@@ -295,6 +298,12 @@ function showModules() {
 	} else {
 		sessvars.buttonTransferEnabled = false;
 	}
+	if (buttonClosingSoonEnabled == true) {
+		$('#closingSoonAction').show();
+	} else {
+		$('#closingSoonAction').hide();
+	}
+	
 }
 
 function setTempShowModule() {
@@ -516,6 +525,13 @@ function setUnitTypeModules(val) {
 		oneClickTransfer = params.oneClickTransfer;	
 	}
 
+	if (params.btnStatus != undefined) {
+		buttonClosingSoonEnabled = params.btnStatus;					// Transfer button
+	}
+	if (params.openUrl != undefined) {
+		openUrl = params.openUrl;					// Transfer button
+ 	}
+	
 	showModules();
 }
 

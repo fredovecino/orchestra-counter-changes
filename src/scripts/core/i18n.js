@@ -121,6 +121,7 @@ var i18n = new function () {// helper method (that doesnt bomb) for setting inne
         i18nQmBtn("walkDirectBtn", 'info.actionbar.walkIn');
         i18nQmBtn("callNextBtn", 'info.actionbar.callNext');
         i18nQmBtn("closeBtn", 'info.actionbar.closeCounter');
+        i18nQmBtn("closingSoonBtn", 'info.actionbar.closingSoonCounter');
 
         //in terminal labels and selection boxes
         i18nSafe("infoServing", 'info.is.serving');

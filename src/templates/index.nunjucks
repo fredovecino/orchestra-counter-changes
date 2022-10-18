@@ -30,6 +30,7 @@
             <!-- Qmatic Main Left -->
             <div class="qm-main__left">
                 <div class="qm-main__scroll-container">
+                    <div class="qm-msg-close-soon" id ="msg-close-soon"> </div>
                     <div class="qm-card-layout" id="cardContainer" tabindex="-1">
                         <div id="qm-card-nav" class="qm-hide qm-card-stack">
                             {% include "partials/card/closeCard/close-card.nunjucks" %}
