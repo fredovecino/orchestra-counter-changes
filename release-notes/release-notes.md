@@ -12,16 +12,22 @@ This document describes the new features, bug corrections, known issues and reco
 
 **Date: 18/10/2022**
 
-**Build number: 2**
+**Build number: 3**
 
 <h3>Stories</h3>
 
 | **Id** | **Release notes** |
 | --- | --- |
 | **COUNTER-683** | **Show link to Experience Cloud portal instead of Home-icon** |
-| **COUNTER-685** | **Typo in Dutch translation** |
 | **COUNTER-695** | **Waiting area load balancer support in Counter** |
 | **COUNTER-696** | **Possibility to open a URL in another tab** |
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **COUNTER-685** | **Typo in Dutch translation** |
+| **COUNTER-697** | **Cleanup settings.js - "Transfer with Delay" button** |
 
 ----------
 

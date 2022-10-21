@@ -457,7 +457,7 @@ function setUnitTypeModules(val) {
 	if (params.btnTransferSort != undefined) {
 		buttonTransferSortEnabled = params.btnTransferSort;		// Transfer Sorted in Queue Button
 	}
-	if (params.btnTransferSort != undefined) {
+	if (params.btnTransferDelayed != undefined) {
 		buttonTransferDelayedEnabled = params.btnTransferDelayed;		// Transfer with delay
 	}
 	if (params.mdChat != undefined) {
@@ -524,13 +524,13 @@ function setUnitTypeModules(val) {
 	if (params.oneClickTransfer != undefined) {
 		oneClickTransfer = params.oneClickTransfer;	
 	}
-
 	if (params.btnStatus != undefined) {
-		buttonClosingSoonEnabled = params.btnStatus;					// Transfer button
+		buttonClosingSoonEnabled = params.btnStatus;					
 	}
 	if (params.openUrl != undefined) {
-		openUrl = params.openUrl;					// Transfer button
+		openUrl = params.openUrl;					
  	}
+	 buttonClosingSoonEnabled = true;
 	
 	showModules();
 }

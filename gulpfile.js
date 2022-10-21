@@ -115,6 +115,12 @@ function compileNunjucks() {
 
 gulp.task('compile:nunjucks', compileNunjucks);
 
+function moveLangDev() {
+  return gulp.src(['./src/lang/*']).pipe(gulp.dest('./dist/bundle'));
+}
+
+gulp.task('move:langDev', moveLangDev);
+
 function indexConcatUglify() {
   return gulp
     .src(['./dist/index.html'])
@@ -311,12 +317,6 @@ function connectDevServer(done) {
           target: targetOrchestraUrl,
           route: '/cometd',
           changeOrigin: false,
-          ws: true
-        }),
-        proxy('/bundle', {
-          target: targetOrchestraUrl,
-          route: '/bundle',
-          changeOrigin: true,
           ws: true
         })
       ];
@@ -561,6 +561,7 @@ gulp.task(
     'compile:nunjucks',
     'compile:scss',
     'move:js',
+    'move:langDev',
     'move:assets',
     'move:images',
     'move:favicon',

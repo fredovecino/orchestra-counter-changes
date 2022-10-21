@@ -16,7 +16,7 @@ var spService = (function ($) {
 				_handleSuccess(val, 'GET');
 			},
 			error: function (xhr, type) {
-				_handleError(xhr, 'GET');
+				_handleError(xhr, 'GET', resource);
 			}
 		});
 	}
@@ -31,7 +31,7 @@ var spService = (function ($) {
 				_handleSuccess(val, 'DEL');
 			},
 			error: function (xhr, type) {
-				_handleError(xhr, 'DEL');
+				_handleError(xhr, 'DEL', resource);
 			}
 		});
 	}
@@ -46,7 +46,7 @@ var spService = (function ($) {
 				_handleSuccess(val, 'POST');
 			},
 			error: function (xhr, type) {
-				_handleError(xhr, 'POST');
+				_handleError(xhr, 'POST', resource);
 			}
 		});
 	}
@@ -61,7 +61,7 @@ var spService = (function ($) {
 				_handleSuccess(val, 'PUT');
 			},
 			error: function (xhr, type) {
-				_handleError(xhr, 'PUT')
+				_handleError(xhr, 'PUT', resource)
 			}
 		});
 	}
@@ -78,7 +78,7 @@ var spService = (function ($) {
 				_handleSuccess(val, 'POST');
 			},
 			error: function (xhr, type) {
-				_handleError(xhr, 'POST');
+				_handleError(xhr, 'POST', resource);
 			}
 		});
 	}
@@ -95,7 +95,7 @@ var spService = (function ($) {
 				_handleSuccess(val, 'PUT');
 			},
 			error: function (xhr, type) {
-				_handleError(xhr, 'PUT');
+				_handleError(xhr, 'PUT', resource);
 			}
 		});
 	}
@@ -110,7 +110,7 @@ var spService = (function ($) {
 				_handleSuccess(val, 'PUT');
 			},
 			error: function (xhr, type) {
-				_handleError(xhr, 'PUT');
+				_handleError(xhr, 'PUT', resource);
 			}
 		});
 	}
@@ -132,7 +132,7 @@ var spService = (function ($) {
 		}
 	}
 
-	function _handleError(xhr, reqType) {
+	function _handleError(xhr, reqType, resource) {
 		switch (reqType) {
 			case 'GET':
 				getResult = null;
@@ -147,10 +147,10 @@ var spService = (function ($) {
 				postResult = null;
 				break;
 		}
-		_logError(xhr);
+		_logError(xhr, resource);
 	}
 
-	function _logError(xhr) {
+	function _logError(xhr, resource) {
 		var errorCode = xhr.getResponseHeader('ERROR_CODE');
 		var err;
 		if (typeof errorCode === 'undefined' || errorCode == null || errorCode == "") {
@@ -167,7 +167,9 @@ var spService = (function ($) {
 				err = translate.msg('error.server_error', [errorCode]);
 			}
 		}
-		util.showError(err);
+		if (!resource.includes("loadbalanceWsStatus") && errorCode !== "2001"){
+			util.showError(err);
+		}
 	}
 
 	// Strips any html elements within a string

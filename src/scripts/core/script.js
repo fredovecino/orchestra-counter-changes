@@ -2471,6 +2471,7 @@ var servicePoint = new function () {
 
 		deliveredServices.clearTable();
 		customMarks.clearTable();
+		sessvars.urlToOpen = undefined;
 	};
 
 	var updateTransactionTime = function () {
@@ -3487,7 +3488,11 @@ var servicePoint = new function () {
 	
 	this.openUrlInTab = function(val) { 
 		try {
-			window.open(val,'_blank');
+			var isValidUrl = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(val);
+			if(isValidUrl){
+				val = val.includes('://') ? val : 'http://' + val;
+				window.open(val,'_blank');
+			}
 		} catch (error) {
 			console.error(error);
 		}
