@@ -10,9 +10,9 @@ This document describes the new features, bug corrections, known issues and reco
 
 <h2>Version 5.1.1</h2>
 
-**Date: 18/10/2022**
+**Date: 24/10/2022**
 
-**Build number: 3**
+**Build number: 4**
 
 <h3>Stories</h3>
 
