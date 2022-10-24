@@ -202,7 +202,10 @@ var servicePoint = new function () {
 		}
 		$('#cloudLinkSection').hide();
 		$('#headerLogoWithCloud').hide();
-	    if(sessvars.isVisitManager){
+		if(sessvars.isVisitManager){	
+			$('#headerLogo').hide();
+			$('#homeBrandLogoVisitManager').show();
+
 			this.handleUserStatus();
 		}
 		if(sessvars.isVisitManager && sessvars.systemInformation.portalUrl !== undefined){ 
@@ -2690,6 +2693,7 @@ var servicePoint = new function () {
 			return false;
 		}
 	}
+	
 	this.handleHome = function () {
 		if (workstationOffline || (servicePoint.hasValidSettings() && servicePoint.isOutcomeOrDeliveredServiceNeeded())) {
 			util.showError(jQuery.i18n
@@ -2707,11 +2711,14 @@ var servicePoint = new function () {
 		} else {
 			url = (sessvars.systemInformation.portalUrl !== undefined) ? sessvars.systemInformation.portalUrl : "/";
 		}
-		$("#headerLogo").attr("href", url);	
+		
 		if(url !== '/') {
 			$("#cloudHref").attr("href", url);
 			$("#cloudHref").attr("target", "_blank");
-		}		
+		} else {
+			$("#headerLogo").attr("href", url);
+		}
+				
 	};
 
 	this.handleLogoutQES = function (warn, force) {
