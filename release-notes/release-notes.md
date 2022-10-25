@@ -8,6 +8,20 @@ This document describes the new features, bug corrections, known issues and reco
 
 **Note:** Several of the remarks refer to a Jira number (Jira is Qmatic&#39;s internal registration system for bugs), or Pivotal Tracker (internal system for improvements and other issues).
 
+<h2>Version 5.1.2</h2>
+
+**Date: 25/10/2022**
+
+**Build number: 1**
+
+<h3>Bug fixes</h3>
+
+| **Id** | **Release notes** |
+| --- | --- |
+| **COUNTER-755** | **Can't hide 'Closing soon' button** |
+
+----------
+
 <h2>Version 5.1.1</h2>
 
 **Date: 24/10/2022**

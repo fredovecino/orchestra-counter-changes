@@ -530,7 +530,6 @@ function setUnitTypeModules(val) {
 	if (params.openUrl != undefined) {
 		openUrl = params.openUrl;					
  	}
-	 buttonClosingSoonEnabled = true;
 	
 	showModules();
 }
